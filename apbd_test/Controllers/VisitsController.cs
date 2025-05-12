@@ -64,7 +64,7 @@ public class VisitsController : Controller
             return new ObjectResult("Service error")
             {
                 StatusCode = StatusCodes.Status500InternalServerError
-            }
+            };
         }
     }
 }
