@@ -41,7 +41,22 @@ public class VisitsController : Controller
     [HttpPost]
     public async Task<IActionResult> AddVisit(AddVisitDTO addVisitDto)
     {
-        var result = await _visitService.AddVisit(addVisitDto);
-;        return Ok(addVisitDto);
+        try
+        {
+            var result = await _visitService.AddVisit(addVisitDto);
+            return Ok(addVisitDto);
+        }
+        catch (ClientNotFoundException)
+        {
+            return NotFound("Client not found");
+        }
+        catch (MechanicNotFoundException)
+        {
+            return NotFound("Mechanic not found");
+        }
+        catch (VisitAlreadyExistsException)
+        {
+            return Conflict("Visit already exists");
+        }
     }
 }

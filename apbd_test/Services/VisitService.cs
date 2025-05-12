@@ -298,10 +298,33 @@ public class VisitService : IVisitService
                 transaction.Rollback();
                 throw ex;
             }
+
+            List<VisitServiceDTO> services = new List<VisitServiceDTO>();
+            foreach (RequestVisitServiceDTO serviceDto in addVisitDto.Services)
+            {
+                services.Add(new VisitServiceDTO()
+                {
+                    Name = serviceDto.ServiceName,
+                    ServiceFee = serviceDto.ServiceFee
+                });
+            }
+            
             return new VisitDTO()
             {
-                Client = new 
-            }
+                Client = new ClientDTO()
+                {
+                    FirstName = firstName,
+                    LastName = lastName,
+                    DateOfBirth = dateOfBirth
+                },
+                Date = DateTime.Now,
+                Mechanic = new MechanicDTO()
+                {
+                    Id = mechanicId,
+                    LicenceNumber = addVisitDto.MechanicLicenceNumber
+                },
+                Services = services
+            };
         }
     }
 }
