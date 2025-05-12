@@ -45,7 +45,10 @@ public class VisitsController : Controller
         try
         {
             var result = await _visitService.AddVisit(addVisitDto);
-            return Ok(addVisitDto);
+            return new ObjectResult(result)
+            {
+                StatusCode = StatusCodes.Status201Created
+            };
         }
         catch (ClientNotFoundException)
         {

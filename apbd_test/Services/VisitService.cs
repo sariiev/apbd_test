@@ -270,7 +270,6 @@ public class VisitService : IVisitService
                     command.Parameters.AddWithValue("@date", DateTime.Now);
 
                     var result = await command.ExecuteScalarAsync();
-                    int createdVisitId = Convert.ToInt32(result);
                 }
 
                 using (SqlCommand command = new SqlCommand(sql6, connection, transaction))
@@ -287,7 +286,6 @@ public class VisitService : IVisitService
                         command.Parameters.AddWithValue("@serviceFee", serviceFee);
 
                         var result = await command.ExecuteScalarAsync();
-                        int createdVisitServiceId = Convert.ToInt32(result);
                     }
                 }
                 
@@ -295,6 +293,7 @@ public class VisitService : IVisitService
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 transaction.Rollback();
                 throw new ServiceError();
             }
