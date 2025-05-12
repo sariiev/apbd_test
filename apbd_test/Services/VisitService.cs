@@ -296,7 +296,7 @@ public class VisitService : IVisitService
             catch (Exception ex)
             {
                 transaction.Rollback();
-                throw ex;
+                throw new ServiceError();
             }
 
             List<VisitServiceDTO> services = new List<VisitServiceDTO>();

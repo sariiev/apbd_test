@@ -1,6 +1,7 @@
 using apbd_test.Exceptions;
 using apbd_test.Models.DTOs;
 using apbd_test.Services;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace apbd_test.Controllers;
@@ -57,6 +58,13 @@ public class VisitsController : Controller
         catch (VisitAlreadyExistsException)
         {
             return Conflict("Visit already exists");
+        }
+        catch (ServiceError)
+        {
+            return new ObjectResult("Service error")
+            {
+                StatusCode = StatusCodes.Status500InternalServerError
+            }
         }
     }
 }
